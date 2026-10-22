@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Din — your money, explained</title>
+  <desc id="desc">Branded illustration of Din's Home, Activity and Plan screens</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#075B58"/><stop offset="1" stop-color="#0D1734"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#061C25" flood-opacity=".22"/></filter>
+  </defs>
+  <rect width="1200" height="420" rx="28" fill="url(#bg)"/>
+  <circle cx="1090" cy="42" r="160" fill="#53BC9C" opacity=".10"/>
+  <circle cx="705" cy="415" r="230" fill="#F5846C" opacity=".08"/>
+  <text x="75" y="102" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="64" font-weight="800" letter-spacing="-3">Din<tspan fill="#F5846C">.</tspan></text>
+  <text x="75" y="160" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="38" font-weight="700">Your money, explained.</text>
+  <text x="77" y="203" fill="#D0EBE4" font-family="Arial, sans-serif" font-size="20">A clear daily number. Real spending. Better decisions.</text>
+  <rect x="75" y="252" width="150" height="46" rx="23" fill="#A5F0C5"/><text x="110" y="282" fill="#075B58" font-family="Arial, sans-serif" font-size="17" font-weight="700">Home</text>
+  <rect x="237" y="252" width="150" height="46" rx="23" fill="#FFFFFF" fill-opacity=".15"/><text x="270" y="282" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" font-weight="700">Activity</text>
+  <rect x="399" y="252" width="150" height="46" rx="23" fill="#FFFFFF" fill-opacity=".15"/><text x="450" y="282" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="17" font-weight="700">Plan</text>
+  <g filter="url(#shadow)">
+    <rect x="700" y="70" width="390" height="290" rx="25" fill="#F8F7F2"/>
+    <text x="730" y="112" fill="#0D1734" font-family="Arial, sans-serif" font-size="22" font-weight="800">Today at a glance</text>
+    <rect x="730" y="133" width="330" height="125" rx="18" fill="#075B58"/>
+    <text x="753" y="170" fill="#C7EEE5" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="2">SAFE TO SPEND</text>
+    <rect x="753" y="192" width="160" height="20" rx="10" fill="#FFFFFF" fill-opacity=".9"/>
+    <rect x="753" y="227" width="282" height="8" rx="4" fill="#FFFFFF" fill-opacity=".3"/>
+    <rect x="753" y="227" width="154" height="8" rx="4" fill="#A5F0C5"/>
+    <rect x="730" y="280" width="100" height="50" rx="12" fill="#FFFFFF"/>
+    <rect x="842" y="280" width="100" height="50" rx="12" fill="#FFFFFF"/>
+    <rect x="954" y="280" width="106" height="50" rx="12" fill="#FFFFFF"/>
+    <text x="751" y="312" fill="#075B58" font-family="Arial, sans-serif" font-size="14" font-weight="700">Home</text>
+    <text x="857" y="312" fill="#075B58" font-family="Arial, sans-serif" font-size="14" font-weight="700">Activity</text>
+    <text x="987" y="312" fill="#075B58" font-family="Arial, sans-serif" font-size="14" font-weight="700">Plan</text>
+  </g>
+</svg>

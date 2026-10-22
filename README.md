@@ -1,22 +1,51 @@
-# Din for Android and iPhone
+<div align="center">
+  <img src="assets/images/icon.png" alt="Din app icon" width="88" />
 
-Din is a React Native app built with Expo. It has **three separate screens**: Home, Activity, and Plan. It starts with no sample transactions.
+  # Din
 
-## Run it on a phone
+  **Your money, explained.** A daily spending tracker built for Android and iPhone.
 
-1. Install Node.js 22 or newer on the development computer and **Expo Go** on the Android or iPhone.
-2. In this folder run `npm install` and then `npx expo start --tunnel`.
-3. Scan the QR code with Expo Go. On iPhone, the Camera app can open the QR code.
-4. Open **Plan** to enter monthly take-home income, bills and savings, and reminder times. Tap **Enable phone reminders** and grant notification permission.
-5. Open **Activity** to add expenses or import a bank CSV. Review the new rows and overlaps before confirming. The Home budget and categories update immediately.
+  [![Expo](https://img.shields.io/badge/Expo-SDK%2058-0D1734?logo=expo&logoColor=white)](https://expo.dev/)
+  [![React Native](https://img.shields.io/badge/React%20Native-0.88-086B63?logo=react&logoColor=white)](https://reactnative.dev/)
+  [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS-F5846C)](#run-on-a-phone)
 
-The app saves transactions on the phone using Expo SQLite. The calculation uses a 30-day pace: income ÷ 30, and `(income - bills and savings) ÷ 30 - today's recorded expenses`. Transfers between your own accounts are excluded from spending totals. Activity has transaction search, category editing, and deletion. When you edit a category, you can save a merchant rule for all matching entries and future imports. Home shows a monthly recap, top merchants, and merchants seen in two or more months as possible recurring payments. Review those recurring suggestions; they are inferred from descriptions and may not be subscriptions.
+  <img src="docs/hero.svg" alt="Din brand illustration showing Home, Activity, and Plan" width="100%" />
+</div>
 
-Morning and evening **local notifications** are scheduled for the next 30 days, so they can appear after the app closes. Pending notifications are recalculated when the app is opened or a transaction changes. An evening notification uses the spending recorded when it was last scheduled; without live bank data, it cannot include purchases the app never received. Android may delay a reminder because of device battery settings.
+## What Din does
 
-## Bank CSV format
+Din turns a monthly take-home income into a simple daily number. Set aside bills and savings, record spending, and see how much of today's allowance remains. The app starts **empty**—there are no sample transactions or pretend bank connections.
 
-Use a CSV with `Date`, `Description`, and `Debit` headers. Din also recognizes common variants such as `Transaction Date`, `Particulars`, `Narration`, `Withdrawal Amount`, and `Amount (INR)`, including CSVs with a few preamble lines and semicolon separators. Dates can be `DD/MM/YYYY`, `YYYY-MM-DD`, or `DD-MMM-YYYY`. PDF and Excel workbook files are not supported.
+| Home | Activity | Plan |
+| --- | --- | --- |
+| Daily balance, category totals, monthly recap, top merchants, and possible recurring payments | Add expenses, search, review CSV imports, fix categories, and create merchant rules | Set income, amount to set aside, reminder times, and notification preference |
+
+**Daily allowance:** `(monthly income − monthly set-aside) ÷ 30`
+
+**Remaining today:** `daily allowance − expenses recorded today`
+
+Transfers are excluded from spending totals. Changes to recorded transactions update the dashboard immediately.
+
+## Run on a phone
+
+You need Node.js 22+ and [Expo Go](https://expo.dev/go) on an Android phone or iPhone.
+
+```bash
+npm install
+npx expo start --tunnel
+```
+
+Scan the QR code, then:
+
+1. Open **Plan** and save your monthly income and amount to set aside.
+2. Enable phone reminders and grant notification permission if you want morning and evening check-ins.
+3. Open **Activity** to add an expense or import a bank CSV.
+
+This repository contains the app source. It does not contain a signed APK or IPA.
+
+## Import real expenses
+
+Din accepts **CSV** files with a date, description, and debit or amount column. It recognizes common headings such as `Transaction Date`, `Narration`, `Particulars`, `Withdrawal Amount`, and `Amount (INR)`. It accepts `DD/MM/YYYY`, `YYYY-MM-DD`, and `DD-MMM-YYYY` dates, and comma or semicolon separators.
 
 ```csv
 Date,Description,Debit
@@ -24,19 +53,43 @@ Date,Description,Debit
 22/10/2026,Groceries,600
 ```
 
-An `Amount` column also works. Add a `Type` or `DR/CR` column with `Debit`/`DR` or `Credit`/`CR` to exclude credits. Without a credit marker, positive amounts are treated as expenses, so use that layout only for expense-only CSVs. Before confirmation, Din shows how many debit rows are new and how many overlap with saved transactions. Overlap detection compares date, amount, and normalized merchant description; identical same-day payments can sometimes look like duplicates, so check the preview. The exact same file is blocked from being imported twice.
+Use a `Type` or `DR/CR` column to mark credits when importing an amount column. Without a credit marker, positive amounts are treated as expenses; use that layout only for expense-only exports. PDF and Excel workbook imports are not supported.
 
-## What still needs external access
+Before you confirm, Din previews new expenses and flags overlaps with saved transactions. It compares date, amount, and normalized merchant name. Two genuine same-day payments of the same amount can look like duplicates, so review the preview. The exact same file cannot be imported twice.
 
-**Automatic bank/UPI connection is not active.** The Account Aggregator flow requires an eligible regulated Financial Information User or partner, an Account Aggregator provider, consent handling, and a secure backend. There are no fake bank connections or bank credentials in this project. CSV import and manual recording are the real data sources available now.
+You can correct a category for one transaction or save a merchant rule for matching entries and future imports. The monthly recap shows category and merchant totals; a merchant seen in at least two months is shown as a **possible** recurring payment, not a confirmed subscription.
 
-This repository is source code, not a signed APK or IPA. Android standalone builds need a configured Android build environment or Expo EAS account. iPhone standalone builds need Apple Developer signing. Expo Go runs this project on both platforms for development.
+## Reminders and data
 
-## Checks
+Din schedules local morning and evening notifications for the next 30 days. They can appear after the app closes. Pending notifications are recalculated when the app opens or recorded data changes. A scheduled recap reflects the expenses known to Din at scheduling time; it cannot include an unrecorded purchase. Device settings may delay notifications.
 
-- `node --experimental-strip-types src/finance.test.mjs`
-- `npx tsc --noEmit`
-- `npx expo export --platform android`
-- `npx expo export --platform ios`
+Transactions are stored locally with Expo SQLite. This prototype has no app-level database encryption, backup, account login, or production security review. Avoid treating it as a production financial vault.
 
-Financial data remains in the phone's app sandbox. This prototype does not yet add app-level database encryption, backup, authentication, or a security review required before public launch.
+## Current integration status
+
+| Capability | Status |
+| --- | --- |
+| Manual spending and CSV import | Working |
+| Daily budget and spending analysis | Working with recorded data |
+| Local phone reminders | Implemented; test delivery on your devices |
+| Automatic bank/UPI sync | **Not connected** |
+| Store-ready signed app | **Not built** |
+
+Automatic bank data in India needs an eligible Financial Information User or partner, an Account Aggregator provider, consent handling, and a secure backend. The app does not request bank credentials or claim to sync accounts today.
+
+## Development
+
+```bash
+node --experimental-strip-types src/finance.test.mjs
+npx tsc --noEmit
+npx expo export --platform android
+npx expo export --platform ios
+```
+
+`app/` contains the three routes and add-expense screen. `src/finance.ts` contains budget, import, duplicate, and recap logic. `src/store.tsx` persists data; `src/reminders.ts` schedules notifications.
+
+## Next steps
+
+- Test notifications and import flows on physical Android and iPhone devices.
+- Add encrypted backup and an app lock before wider use.
+- Integrate consent-based bank data only after the required partner and backend are in place.
